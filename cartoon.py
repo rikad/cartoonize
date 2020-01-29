@@ -18,9 +18,9 @@ canvas = tk.Canvas(root, height=250, width=300)
 image_id = canvas.create_image(0,0, anchor=tk.NW)
 
 #default config
-lineSize.set(9)
-lines.set(9)
-blur.set(25)
+lineSize.set(13)
+lines.set(6)
+blur.set(49)
 
 def printConfig():
     if blur.get() % 2 == 0:
@@ -35,7 +35,7 @@ def printConfig():
 
 
 def openfile():
-    root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.")))
+    root.filename = filedialog.askopenfilename(initialdir = "data",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.")))
 
     canvas.image_tk = ImageTk.PhotoImage(Image.open(root.filename))
 
@@ -72,13 +72,15 @@ def proses():
 
     # 4) show
     cv2.destroyAllWindows()
-    cv2.imshow("Cartoon", cartoon)
-
     # debug
     # cv2.destroyWindow("Cartoon")
-    # cv2.imshow("Image", img)
-    # cv2.imshow("color", color)
-    # cv2.imshow("edges", edges)
+    cv2.imshow("blur", gray)
+    cv2.imshow("color", color)
+    cv2.imshow("edges", edges)
+    cv2.imshow("Cartoon", cartoon)
+    
+    #save
+    cv2.imwrite(root.filename+"-cartoon.jpg",cartoon)
 
 #button
 btnOpen = tk.Button(root, text ="Pilih File", command = openfile)
